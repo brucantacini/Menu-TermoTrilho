@@ -1,0 +1,122 @@
+[
+    {
+        "ID_ESTACAO": 40,
+        "NM_ESTACAO": "Autódromo",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 33,
+        "NM_ESTACAO": "Berrini",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 26,
+        "NM_ESTACAO": "Ceasa",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 31,
+        "NM_ESTACAO": "Cidade Jardim",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 28,
+        "NM_ESTACAO": "Cidade Universitária",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 49,
+        "NM_ESTACAO": "Estação Grajaú",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 47,
+        "NM_ESTACAO": "Estação Pinheiros",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 48,
+        "NM_ESTACAO": "Estação Santo Amaro",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 42,
+        "NM_ESTACAO": "Grajaú",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 35,
+        "NM_ESTACAO": "Granja Julieta",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 30,
+        "NM_ESTACAO": "Hebraica–Rebouças",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 36,
+        "NM_ESTACAO": "João Dias",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 39,
+        "NM_ESTACAO": "Jurubatuba",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 43,
+        "NM_ESTACAO": "Mendes–Vila Natal",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 34,
+        "NM_ESTACAO": "Morumbi",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 24,
+        "NM_ESTACAO": "Osasco",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 29,
+        "NM_ESTACAO": "Pinheiros",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 25,
+        "NM_ESTACAO": "Presidente Altino",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 41,
+        "NM_ESTACAO": "Primavera-Interlagos",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 37,
+        "NM_ESTACAO": "Santo Amaro",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 38,
+        "NM_ESTACAO": "Socorro",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 44,
+        "NM_ESTACAO": "Varginha",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 32,
+        "NM_ESTACAO": "Vila Olímpia",
+        "ID_LINHA": 2
+    },
+    {
+        "ID_ESTACAO": 27,
+        "NM_ESTACAO": "Villa-Lobos–Jaguaré",
+        "ID_LINHA": 2
+    }
+]

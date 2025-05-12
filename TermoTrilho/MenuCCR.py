@@ -3,6 +3,7 @@ import json
 import os
 import requests
 import oracledb
+from datetime import datetime
 
 def verificar_riscos():
     url = "https://api.open-meteo.com/v1/forecast?latitude=-23.55&longitude=-46.63&current=temperature_2m"
@@ -13,7 +14,6 @@ def verificar_riscos():
         temperatura = dados["current"]["temperature_2m"]
         print(f"Temperatura atual: {temperatura}°C")
 
-        # Análise de risco de flambagem
         if temperatura < 20:
             print("Status: Sem risco de flambagem nos trilhos.")
         elif 20 <= temperatura <= 35:
@@ -75,6 +75,7 @@ def status_linhas():
             # exibe os itens da lista
             for item in lista_dados:
                 print(item)
+                print()
     except Exception as error:
         print(f"Erro na transação com o banco de dados: {error}")
 
@@ -94,6 +95,7 @@ def exibir_estacoes():
             else:
                 for item in lista_dados:
                     print(item)
+                    print()
         else:
             print("Escolha uma linha válida!")
     except Exception as error:
@@ -119,6 +121,7 @@ def exibir_alertas():
             # exibe os itens da lista
             for item in lista_dados:
                 print(item)
+                print()
     except Exception as error:
         print(f"Erro na transação com o banco de dados: {error}")
 
@@ -129,7 +132,7 @@ def excluirAlerta():
         alerta_id = int(input("Digite o ID do alerta: "))
 
         # Monta a instrução SQL de consulta
-        consulta = f"""SELECT * FROM T_TT_ALERTA WHERE ID = {alerta_id}"""
+        consulta = f"""SELECT * FROM T_TT_ALERTA WHERE ID_ALERTA = {alerta_id}"""
 
         # Executa o script SQL no banco de dados
         cursor.execute(consulta)
@@ -142,13 +145,14 @@ def excluirAlerta():
             print(f"Não há dados cadastrado com o ID = {alerta_id}")
         else:
             # Cria a instrução SQL de exclusão
-            script = f"""DELETE FROM T_TT_ALERTA WHERE ID = {alerta_id}"""
+            script = f"""DELETE FROM T_TT_ALERTA WHERE ID_ALERTA = {alerta_id}"""
 
             # Executa a instrução e atualiza a tabela
             cursor.execute(script)
             conn.commit()
 
             print("\nAlerta concluído com sucesso.")
+            print()
     except ValueError:
         print("Digite um número inteiro para o id!")
     except Exception as error:
@@ -174,6 +178,7 @@ def historico_manutencoes():
             # exibe os itens da lista
             for item in lista_dados:
                 print(item)
+                print()
     except Exception as error:
          print(f"Erro na transação com o banco de dados: {error}")
 
@@ -193,16 +198,23 @@ def consultar_manutencoes_por_tipo():
         if not resultados:
             print("Nenhuma manutenção encontrada com esse tipo.")
         else:
-            # Cabeçalhos das colunas
             colunas = [desc[0] for desc in cursor.description]
-            dados_json = [dict(zip(colunas, linha)) for linha in resultados]
+            dados_json = []
 
-            # Exportar para arquivo JSON
+            for linha in resultados:
+                registro = {}
+                for col, val in zip(colunas, linha):
+                    if isinstance(val, datetime):
+                        registro[col] = val.strftime("%Y-%m-%d %H:%M:%S")
+                    else:
+                        registro[col] = val
+                dados_json.append(registro)
+
             nome_arquivo = f"manutencoes_tipo_{tipo}.json"
             with open(nome_arquivo, "w", encoding="utf-8") as f:
                 json.dump(dados_json, f, indent=4, ensure_ascii=False)
 
-            print(f"{len(dados_json)} registros exportados para '{nome_arquivo}' com sucesso.")
+            print(f"{len(dados_json)} registros exportados para '{nome_arquivo}' com sucesso.\n")
     except Exception as error:
         print(f"Erro ao consultar manutenções: {error}")
 
@@ -214,7 +226,7 @@ def alterar_dados_manutencao():
         manutencao_id = int(input("Digite o ID da manutenção: "))
 
         # Monta a instrução SQL de consulta
-        script = f"""SELECT * FROM T_TT_MANUTENCAO WHERE ID = {manutencao_id}"""
+        script = f"""SELECT * FROM T_TT_MANUTENCAO WHERE ID_MANUTENCAO = {manutencao_id}"""
 
         # Executa o script SQL no banco de dados
         cursor.execute(script)
@@ -238,13 +250,14 @@ def alterar_dados_manutencao():
                          DES_MANUTENCAO = '{des_manutencao}',
                          RESPONSAVEL = '{responsavel}',
                          ID_TRILHO = {id_trilho}
-                         WHERE ID = {manutencao_id}"""
+                         WHERE ID_MANUTENCAO = {manutencao_id}"""
 
             # Executa e altera o registro na Tabela
             cursor.execute(script)
             conn.commit()
 
             print("\nItem alterado com sucesso!")
+            print()
     except ValueError:
         print("Digite um valor inteiro.")
     except Exception as error:
@@ -268,6 +281,7 @@ def registrar_manutencao():
         conn.commit()
 
         print("\nManutenção registrada com sucesso.")
+        print()
     except ValueError:
         print("O ID do trilho deve ser um número inteiro!")
     except Exception as error:
@@ -293,54 +307,59 @@ def trilhos_monitorados():
             # exibe os itens da lista
             for item in lista_dados:
                 print(item)
+                print()
     except Exception as error:
         print(f"Erro na transação com o banco de dados: {error}")
 
-def consultar_trilhos_por_data():
+def exportar_estacoes_linhas():
     try:
-        print("----- CONSULTA DE TRILHOS INSTALADOS APÓS UMA DATA -----")
-        data_str = input("Digite a data no formato AAAA-MM-DD: ")
+        print("Exportando estações das Linhas 8 e 9...\n")
+        linhas_para_exportar = {
+            1: "linha_8_diamante.json",
+            2: "linha_9_esmeralda.json"
+        }
 
-        try:
-            data_formatada = datetime.datetime.strptime(data_str, "%Y-%m-%d").date()
-        except ValueError:
-            print("Data inválida. Use o formato correto.")
-            return
+        for linha_id, nome_arquivo in linhas_para_exportar.items():
+            script = "SELECT * FROM T_TT_ESTACAO WHERE ID_LINHA = :1"
+            cursor.execute(script, [linha_id])
+            resultados = cursor.fetchall()
 
-        script = "SELECT * FROM T_TT_TRILHO WHERE DT_INSTALACAO > :1"
-        cursor.execute(script, [data_formatada])
-        resultados = cursor.fetchall()
+            if not resultados:
+                print(f"Nenhuma estação encontrada para a linha {linha_id}.")
+                continue
 
-        if not resultados:
-            print("Nenhum trilho encontrado após essa data.")
-        else:
             colunas = [desc[0] for desc in cursor.description]
-            dados_json = [dict(zip(colunas, linha)) for linha in resultados]
+            dados_json = []
 
-            nome_arquivo = f"trilhos_pos_{data_str}.json"
+            for linha in resultados:
+                registro = {}
+                for col, val in zip(colunas, linha):
+                    if isinstance(val, datetime):
+                        registro[col] = val.strftime("%Y-%m-%d %H:%M:%S")
+                    else:
+                        registro[col] = val
+                dados_json.append(registro)
+
             with open(nome_arquivo, "w", encoding="utf-8") as f:
                 json.dump(dados_json, f, indent=4, ensure_ascii=False)
 
-            print(f"{len(dados_json)} registros exportados para '{nome_arquivo}' com sucesso.")
-    except Exception as error:
-        print(f"Erro ao consultar trilhos: {error}")
+            print(f"{len(dados_json)} estações exportadas para '{nome_arquivo}' com sucesso.")
 
+    except Exception as error:
+        print(f"Erro ao exportar estações: {error}")
 
 def cadastrar_trilho():
     try:
         print("----- CADASTRAR TRILHO -----\n")
 
         localizacao = input("Localização do trilho: ")
-        dt_instalacao = input("Data de instalação (AAAA-MM-DD): ")
-        ultima_dt_manutencao = input("Data da última manutenção (AAAA-MM-DD): ")
+        dt_instalacao_str = input("Data de instalação (AAAA-MM-DD): ")
+        ultima_dt_manutencao_str = input("Data da última manutenção (AAAA-MM-DD): ")
         material = input("Material do trilho (opcional): ")
 
-        # Conversão da data
-        try:
-            dt_instalacao = datetime.datetime.strptime(dt_instalacao, "%Y-%m-%d").date()
-        except ValueError:
-            print("Data de instalação inválida. Use o formato AAAA-MM-DD.")
-            return
+        # Conversão das strings para objetos datetime.date
+        dt_instalacao = datetime.strptime(dt_instalacao_str, "%Y-%m-%d").date()
+        ultima_dt_manutencao = datetime.strptime(ultima_dt_manutencao_str, "%Y-%m-%d").date()
 
         script = """INSERT INTO T_TT_TRILHO 
                     (LOCALIZACAO, DT_INSTALACAO, ULTIMA_DT_MANUTENCAO, MATERIAL) 
@@ -350,17 +369,19 @@ def cadastrar_trilho():
         conn.commit()
 
         print("\nTrilho cadastrado com sucesso.")
+        print()
     except Exception as error:
         print(f"Erro na transação com o banco de dados: {error}")
 
 def alterar_dados_trilho():
     try:
+
         print("----- ALTERAR DADOS TRILHO-----\n")
 
         trilho_id = int(input("Digite o ID do trilho: "))
 
         # Monta a instrução SQL de consulta
-        script = f"""SELECT * FROM T_TT_TRILHO WHERE ID = {trilho_id}"""
+        script = f"""SELECT * FROM T_TT_TRILHO WHERE ID_TRILHO = {trilho_id}"""
 
         # Executa o script SQL no banco de dados
         cursor.execute(script)
@@ -374,23 +395,42 @@ def alterar_dados_trilho():
         else:
             # Solicita os novos valores
             localizacao = input("Localização do trilho: ")
-            dt_instalacao = input("Data de instalação (AAAA-MM-DD): ")
-            ultima_dt_manutencao = input("Data da última manutenção (AAAA-MM-DD): ")
+
+            # Validação e conversão das datas
+            while True:
+                try:
+                    dt_instalacao = input("Data de instalação (AAAA-MM-DD): ")
+                    # Verifica se a data está no formato correto
+                    datetime.strptime(dt_instalacao, '%Y-%m-%d')  # Isso irá lançar um erro se o formato estiver incorreto
+                    break
+                except ValueError:
+                    print("Formato de data inválido. Use o formato AAAA-MM-DD.")
+
+            while True:
+                try:
+                    ultima_dt_manutencao = input("Data da última manutenção (AAAA-MM-DD): ")
+                    # Verifica se a data está no formato correto
+                    datetime.strptime(ultima_dt_manutencao, '%Y-%m-%d')
+                    break
+                except ValueError:
+                    print("Formato de data inválido. Use o formato AAAA-MM-DD.")
+
             material = input("Material do trilho (opcional): ")
 
             # Constroi a instrução de edição do registro com os novos valores
-            script = f"""UPDATE T_TT_MANUTENCAO SET
-                         LOCALIZACAO = '{localizacao}',
-                         DT_INSTALACAO = '{dt_instalacao}',
-                         ULTIMA_DT_MANUTENCAO = '{ultima_dt_manutencao}'
-                         MATERIAL = '{material}'
-                         WHERE id = {trilho_id}"""
+            script = f"""UPDATE T_TT_TRILHO SET
+                LOCALIZACAO = '{localizacao}',
+                DT_INSTALACAO = TO_DATE('{dt_instalacao}', 'YYYY-MM-DD'),
+                ULTIMA_DT_MANUTENCAO = TO_DATE('{ultima_dt_manutencao}', 'YYYY-MM-DD'),
+                MATERIAL = '{material}'
+                WHERE ID_TRILHO = {trilho_id}"""
 
             # Executa e altera o registro na Tabela
             cursor.execute(script)
             conn.commit()
 
             print("\nTrilho alterado com sucesso!")
+            print()
     except ValueError:
         print("Digite um valor inteiro.")
     except Exception as error:
@@ -422,12 +462,12 @@ try:
         print("5 - Registrar manutenção")
         print("6 - Histórico de manutenções")
         print("7 - Alterar dados da manutenção")
-        print("8 - Cadastrar Trilho ") #
+        print("8 - Cadastrar Trilho ")
         print("9 - Trilhos sendo monitorados")
         print("10 - Alterar dados do trilho")
         print("11 - Verificar riscos de flambagem")
         print("12 - Consultar manutenções por tipo")
-        print("13 - Consultar trilhos por data de instalação")
+        print("13 - Consultar estações por linhas")
         print("14 - Sair")
 
         escolha = int(input("Escolha uma opção: "))
@@ -458,7 +498,7 @@ try:
             case 12:
                 consultar_manutencoes_por_tipo()
             case 13:
-                consultar_trilhos_por_data()
+                exportar_estacoes_linhas()
             case 14:
                 print('Programa finalizado.')
                 conn.close()
