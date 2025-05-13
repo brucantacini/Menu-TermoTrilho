@@ -1,0 +1,127 @@
+[
+    {
+        "ID_ESTACAO": 23,
+        "NM_ESTACAO": "Amador Bueno",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 14,
+        "NM_ESTACAO": "Antônio João",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 15,
+        "NM_ESTACAO": "Barueri",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 12,
+        "NM_ESTACAO": "Carapicuíba",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 9,
+        "NM_ESTACAO": "Comandante Sampaio",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 5,
+        "NM_ESTACAO": "Domingos de Moraes",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 20,
+        "NM_ESTACAO": "Engenheiro Cardoso",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 46,
+        "NM_ESTACAO": "Estação Itapevi",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 45,
+        "NM_ESTACAO": "Estação Osasco",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 11,
+        "NM_ESTACAO": "General Miguel Costa",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 6,
+        "NM_ESTACAO": "Imperatriz Leopoldina",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 21,
+        "NM_ESTACAO": "Itapevi",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 18,
+        "NM_ESTACAO": "Jandira",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 16,
+        "NM_ESTACAO": "Jardim Belval",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 17,
+        "NM_ESTACAO": "Jardim Silveira",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 1,
+        "NM_ESTACAO": "Júlio Prestes",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 4,
+        "NM_ESTACAO": "Lapa",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 8,
+        "NM_ESTACAO": "Osasco",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 2,
+        "NM_ESTACAO": "Palmeiras-Barra Funda",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 7,
+        "NM_ESTACAO": "Presidente Altino",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 10,
+        "NM_ESTACAO": "Quitaúna",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 19,
+        "NM_ESTACAO": "Sagrado Coração",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 22,
+        "NM_ESTACAO": "Santa Rita",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 13,
+        "NM_ESTACAO": "Santa Terezinha",
+        "ID_LINHA": 1
+    },
+    {
+        "ID_ESTACAO": 3,
+        "NM_ESTACAO": "Água Branca",
+        "ID_LINHA": 1
+    }
+]

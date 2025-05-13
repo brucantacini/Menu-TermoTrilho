@@ -1,0 +1,34 @@
+[
+    {
+        "ID_MANUTENCAO": 1,
+        "DT_MANUTENCAO": "2023-01-15 00:00:00",
+        "TP_MANUTENCAO": "P",
+        "DES_MANUTENCAO": "Manutenção preventiva - Verificação de trilhos e soldagem",
+        "RESPONSAVEL": "José Silva",
+        "ID_TRILHO": 1
+    },
+    {
+        "ID_MANUTENCAO": 3,
+        "DT_MANUTENCAO": "2023-03-20 00:00:00",
+        "TP_MANUTENCAO": "P",
+        "DES_MANUTENCAO": "Manutenção preventiva - Ajuste de encaixes",
+        "RESPONSAVEL": "Carlos Souza",
+        "ID_TRILHO": 3
+    },
+    {
+        "ID_MANUTENCAO": 5,
+        "DT_MANUTENCAO": "2023-05-05 00:00:00",
+        "TP_MANUTENCAO": "P",
+        "DES_MANUTENCAO": "Manutenção preventiva - Inspeção geral e limpeza",
+        "RESPONSAVEL": "Ana Costa",
+        "ID_TRILHO": 5
+    },
+    {
+        "ID_MANUTENCAO": 7,
+        "DT_MANUTENCAO": "2025-05-09 00:00:00",
+        "TP_MANUTENCAO": "P",
+        "DES_MANUTENCAO": "Manutencao PReventiva",
+        "RESPONSAVEL": "Bruno Araujo",
+        "ID_TRILHO": 2
+    }
+]
