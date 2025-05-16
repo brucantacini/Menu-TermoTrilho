@@ -3,7 +3,6 @@ import json
 import os
 import requests
 import oracledb
-from datetime import datetime
 
 def verificar_riscos():
     url = "https://api.open-meteo.com/v1/forecast?latitude=-23.55&longitude=-46.63&current=temperature_2m"
